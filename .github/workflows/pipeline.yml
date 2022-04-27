@@ -8,27 +8,53 @@
 name: Java CI with Gradle
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
 permissions:
   contents: read
 
+env:
+  IMAGE_NAME: helloworld
+  DIGITAL_OCEAN_REGISTRY: lukas-registry
+
 jobs:
-  build:
-
+  build-and-test:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-      with:
-        arguments: build
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build
+      - name: Build with gradle
+        run: ./gradlew check build
+      - uses: actions/upload-artifact@master
+        with:
+          name: applicationJar
+          path: build/libs/kotlin-service-hello-world-1.0-SNAPSHOT.jar
+
+  upload:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Downloading artifacts
+        uses: actions/download-artifact@master
+        with:
+          name: applicationJar
+          path: build/libs/kotlin-service-hello-world-1.0-SNAPSHOT.jar
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Build docker image
+        run: docker build . -f docker/service.dockerfile -t $IMAGE_NAME
+      - name: push image to digitalocean
+        run: |
+              doctl registry login
+              docker tag $IMAGE_NAME registry.digitalocean.com/$DIGITAL_OCEAN_REGISTRY/$IMAGE_NAME
+              docker push registry.digitalocean.com/$DIGITAL_OCEAN_REGISTRY/$IMAGE_NAME
