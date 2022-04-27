@@ -51,7 +51,7 @@ jobs:
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - name: Build docker image
+      - name: Build docker image.
         run: docker build . -f docker/service.dockerfile -t $IMAGE_NAME
       - name: push image to digitalocean
         run: |
