@@ -2,4 +2,4 @@
 set -eo pipefail
 
 echo "Running Service..."
-java -jar helloworld.jar
+java -jar /application/helloworld.jar
