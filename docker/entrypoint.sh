@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-echo "Running Service...123"
+echo "Running Service.."
 pwd
 echo "Contents of this dir"
 ls -la
-echo "contents of previous folder..."
-ls -la ..
-java -jar /helloworld.jar
+java -jar helloworld.jar
