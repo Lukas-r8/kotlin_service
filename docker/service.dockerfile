@@ -10,4 +10,6 @@ RUN chmod +x entrypoint.sh
 # docker build . -f docker/service.dockerfile -t helloworld/container
 # docker run -p 7777:8080  helloworld/container
 
+# docker pull registry.digitalocean.com/lukas-registry/helloworld:latest
+
 ENTRYPOINT ["/application/entrypoint.sh"]
