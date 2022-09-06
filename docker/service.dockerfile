@@ -1,5 +1,5 @@
 FROM openjdk:11
-WORKDIR /application
+WORKDIR /app
 
 COPY build/libs/kotlin-service-hello-world-1.0-SNAPSHOT.jar helloworld.jar
 
@@ -12,4 +12,4 @@ RUN chmod +x entrypoint.sh
 
 # docker pull registry.digitalocean.com/lukas-registry/helloworld:latest
 
-ENTRYPOINT ["/application/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
