@@ -12,4 +12,4 @@ RUN chmod +x entrypoint.sh
 
 # docker pull registry.digitalocean.com/lukas-registry/helloworld:latest
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
