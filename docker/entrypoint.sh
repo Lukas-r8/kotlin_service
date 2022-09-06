@@ -5,4 +5,6 @@ echo "Running Service.."
 pwd
 echo "Contents of this dir"
 ls -la
-java -jar helloworld.jar
+
+echo "running java in debug mode..."
+java -Xdebug -jar helloworld.jar
