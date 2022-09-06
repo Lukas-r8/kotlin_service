@@ -32,11 +32,11 @@ jobs:
         with:
           arguments: build
       - name: Build with gradle
-        run: ./gradlew check build
+        run: ./gradlew check installBootDist
       - uses: actions/upload-artifact@master
         with:
           name: applicationJar
-          path: build/libs/kotlin-service-hello-world-1.0-SNAPSHOT.jar
+          path: build/install/kotlin-service-hello-world-boot/lib/kotlin-service-hello-world-1.0-SNAPSHOT.jar
 
   upload:
     needs: build-and-test
@@ -48,7 +48,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: applicationJar
-          path: build/libs/kotlin-service-hello-world-1.0-SNAPSHOT.jar
+          path: build/install/kotlin-service-hello-world-boot/lib/kotlin-service-hello-world-1.0-SNAPSHOT.jar
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
