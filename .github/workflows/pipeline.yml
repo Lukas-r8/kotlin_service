@@ -36,7 +36,7 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: applicationJar
-          path: build/install/kotlin-service-hello-world-boot/lib/kotlin-service-hello-world-1.0-SNAPSHOT.jar
+          path: build/**
 
   upload:
     needs: build-and-test
@@ -48,7 +48,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: applicationJar
-          path: build/install/kotlin-service-hello-world-boot/lib/kotlin-service-hello-world-1.0-SNAPSHOT.jar
+          path: build/**
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
