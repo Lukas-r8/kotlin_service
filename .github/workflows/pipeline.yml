@@ -27,7 +27,7 @@ jobs:
         uses: oracle-actions/setup-java@v1
         with:
           website: oracle.com
-          release: 17
+          release: 11
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
@@ -37,7 +37,7 @@ jobs:
           name: applicationJar
           path: build/install/kotlin-service-hello-world-boot/lib/kotlin-service-hello-world-1.0-SNAPSHOT.jar
 
-  upload:
+  build-docker-image-and-upload:
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
