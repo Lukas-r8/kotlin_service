@@ -33,7 +33,7 @@ jobs:
         with:
           arguments: build
       - name: Build with gradle
-        run: ./gradlew check installBootDist
+        run: ./gradlew check installBootDist --stacktrace
       - uses: actions/upload-artifact@master
         with:
           name: applicationJar
