@@ -27,7 +27,7 @@ jobs:
         uses: oracle-actions/setup-java@v1
         with:
           website: oracle.com
-          release: 11
+          release: 17
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:

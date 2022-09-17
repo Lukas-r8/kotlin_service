@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM openjdk:17
 WORKDIR /app
 
 COPY build/install/kotlin-service-hello-world-boot/lib/kotlin-service-hello-world-1.0-SNAPSHOT.jar helloworld.jar
