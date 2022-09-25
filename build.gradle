@@ -11,7 +11,7 @@ group 'org.example'
 version '1.0-SNAPSHOT'
 
 application {
-    mainClassName = "com.helloworld.ApplicationKt"
+    mainClassName = "com.helloworld.Application"
 }
 
 repositories {
@@ -19,7 +19,7 @@ repositories {
 }
 
 bootJar {
-    mainClassName = "com.helloworld.ApplicationKt"
+    mainClassName = "com.helloworld.Application"
 }
 
 dependencies {
