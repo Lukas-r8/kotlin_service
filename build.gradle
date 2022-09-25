@@ -1,25 +1,34 @@
+buildscript {
+    ext.configFile = { name ->
+        rootProject.file("config/$name")
+    }
+
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.9.RELEASE"
+    }
+}
+
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.5.30'
     id 'java'
     id 'application'
-    id 'org.springframework.boot' version '2.5.2'
+    id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.jetbrains.kotlin.plugin.spring' version '1.5.21'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.6.10'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.21'
 }
 
 group 'org.example'
 version '1.0-SNAPSHOT'
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
 }
 
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'com.helloworld.Application'
-        )
-    }
+application {
+    mainClassName = "com.helloworld.ApplicationKt"
+    applicationDefaultJvmArgs = ['-Duser.timezone=UTC']
 }
 
 dependencies {
