@@ -10,16 +10,12 @@ plugins {
 group 'org.example'
 version '1.0-SNAPSHOT'
 
-application {
-    mainClassName = "com.helloworld.Application"
-}
-
 repositories {
     mavenCentral()
 }
 
 bootJar {
-    mainClassName = "com.helloworld.Application"
+    mainClassName = "com.helloworld.ApplicationKt"
 }
 
 dependencies {
