@@ -60,3 +60,16 @@ jobs:
               doctl registry login
               docker tag $IMAGE_NAME registry.digitalocean.com/$DIGITAL_OCEAN_REGISTRY/$IMAGE_NAME
               docker push registry.digitalocean.com/$DIGITAL_OCEAN_REGISTRY/$IMAGE_NAME
+
+  deploy-kubernetes:
+    needs: build-docker-image-and-upload
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Deploy image to kubernetes
+        run: |
+          doctl registry login
+          doctl kubernetes apply -f kubernetes.yaml
