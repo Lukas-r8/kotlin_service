@@ -19,7 +19,7 @@ env:
   DIGITAL_OCEAN_REGISTRY: lukas-registry
 
 jobs:
-  build-and-test:
+  build-test-upload:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
@@ -33,28 +33,10 @@ jobs:
         with:
           gradle-version: 7.3.3
           arguments: build check installBootDist --stacktrace
-      - name: Test JAR
-        run: java -jar build/install/kotlin-service-hello-world-boot/lib/kotlin-service-hello-world-1.0-SNAPSHOT.jar
-      - uses: actions/upload-artifact@master
-        with:
-          name: applicationJar
-          path: build/install/kotlin-service-hello-world-boot/lib/kotlin-service-hello-world-1.0-SNAPSHOT.jar
-
-  build-docker-image-and-upload:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    steps:
       - name: Checking out on repo
         uses: actions/checkout@v3
-      - name: Downloading artifacts
-        uses: actions/download-artifact@master
-        with:
-          name: applicationJar
-          path: build/install/kotlin-service-hello-world-boot/lib/kotlin-service-hello-world-1.0-SNAPSHOT.jar
       - name: Verify downloaded JAR
         run: ls -la build/install/kotlin-service-hello-world-boot/lib/
-      - name: Test JAR
-        run: java -jar build/install/kotlin-service-hello-world-boot/lib/kotlin-service-hello-world-1.0-SNAPSHOT.jar
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
