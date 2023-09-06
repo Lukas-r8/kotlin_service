@@ -23,7 +23,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - name: 'Set up latest Zulu JDK 16'
+      - name: Set up latest Zulu JDK 16
         uses: actions/setup-java@v3
         with:
           java-version: '16'
@@ -33,10 +33,10 @@ jobs:
         with:
           gradle-version: 7.3.3
           arguments: build check installBootDist --stacktrace
-      - name: Checking out on repo
-        uses: actions/checkout@v3
-      - name: Verify downloaded JAR
-        run: ls -la build/install/kotlin-service-hello-world-boot/lib/
+      - name: Verify downloaded JAR and java version
+        run: |
+              java --version
+              ls -la build/install/kotlin-service-hello-world-boot/lib/
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
