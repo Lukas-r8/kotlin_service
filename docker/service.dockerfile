@@ -1,4 +1,4 @@
-FROM openjdk:17-oracle
+FROM azul/zulu-openjdk:16
 WORKDIR /app
 
 COPY build/install/kotlin-service-hello-world-boot/lib/kotlin-service-hello-world-1.0-SNAPSHOT.jar helloworld.jar
@@ -8,7 +8,7 @@ RUN chmod +x entrypoint.sh
 
 # commands to build and run the image:
 # docker build . -f docker/service.dockerfile -t helloworld/container
-# docker run -p 7777:8080  helloworld/container
+# docker run -p 8080:8080  helloworld/container
 
 # docker pull registry.digitalocean.com/lukas-registry/helloworld:latest
 
