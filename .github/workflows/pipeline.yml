@@ -20,7 +20,7 @@ env:
 
 jobs:
   build-test-upload:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Set up latest Zulu JDK 16
