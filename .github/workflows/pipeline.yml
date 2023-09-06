@@ -53,6 +53,8 @@ jobs:
     needs: build-test-upload
     runs-on: macos-latest
     steps:
+      - name: Install Kubectl
+        uses: azure/setup-kubectl@v3
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
@@ -60,4 +62,5 @@ jobs:
       - name: Deploy image to kubernetes
         run: |
           doctl registry login
-          doctl kubernetes apply -f kubernetes.yaml
+          doctl kubernetes cluster kubeconfig
+          kubectl apply -f kubernetes.yaml
