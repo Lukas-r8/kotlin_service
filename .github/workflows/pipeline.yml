@@ -49,6 +49,8 @@ jobs:
         with:
           name: applicationJar
           path: build/install/kotlin-service-hello-world-boot/lib/kotlin-service-hello-world-1.0-SNAPSHOT.jar
+      - name: Verify downloaded JAR
+        run: ls -la build/install/kotlin-service-hello-world-boot/lib/
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
