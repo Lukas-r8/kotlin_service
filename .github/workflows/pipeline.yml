@@ -61,6 +61,5 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - name: Deploy image to kubernetes
         run: |
-          doctl registry login
-          doctl kubernetes cluster kubeconfig
+          doctl kubernetes cluster kubeconfig save edd6ddf6-a50a-47b8-9a29-58b0003782d4
           kubectl apply -f kubernetes.yaml
