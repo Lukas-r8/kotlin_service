@@ -50,8 +50,8 @@ jobs:
               docker push registry.digitalocean.com/$DIGITAL_OCEAN_REGISTRY/$IMAGE_NAME
 
   deploy-kubernetes:
-    needs: build-docker-image-and-upload
-    runs-on: ubuntu-latest
+    needs: build-test-upload
+    runs-on: macos-latest
     steps:
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
