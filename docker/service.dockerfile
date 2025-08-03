@@ -10,15 +10,19 @@ WORKDIR /workspace
 
 # Copy Gradle wrapper and settings first so that the dependency download
 # step can be cached when sources change.
-COPY gradlew gradlew
-COPY gradle gradle
-COPY build.gradle settings.gradle gradle.properties ./
+ARG ROOT_PATH=..
+
+# Copy Gradle wrapper and settings from the repository root (one level up)
+COPY ${ROOT_PATH}/gradlew gradlew
+COPY ${ROOT_PATH}/gradle gradle
+COPY ${ROOT_PATH}/build.gradle ${ROOT_PATH}/settings.gradle ${ROOT_PATH}/gradle.properties ./
 
 # Make sure the wrapper is executable
 RUN chmod +x gradlew
 
 # Copy the application sources.
-COPY src src
+# Copy application sources
+COPY ${ROOT_PATH}/src src
 
 # Build the Spring Boot fat jar (tests are skipped to speed up the image build;
 # drop -x test if you need tests executed).
