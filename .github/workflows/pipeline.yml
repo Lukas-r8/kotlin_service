@@ -18,10 +18,6 @@ on:
 permissions:
   contents: read
 
-env:
-  IMAGE_NAME: helloworld
-  DIGITAL_OCEAN_REGISTRY: lukas-registry
-
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -43,26 +39,3 @@ jobs:
           # Upload the built jar(s). The wildcard keeps the
           # workflow stable when version numbers change.
           path: build/libs/*.jar
-
-  upload:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Downloading artifacts
-        uses: actions/download-artifact@master
-        with:
-          name: applicationJar
-          # Target directory. The jar will be placed here so the
-          # subsequent docker build can COPY it.
-          path: build/libs
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - name: Build docker image
-        run: docker build . -f docker/service.dockerfile -t $IMAGE_NAME
-      - name: push image to digitalocean
-        run: |
-              doctl registry login
-              docker tag $IMAGE_NAME registry.digitalocean.com/$DIGITAL_OCEAN_REGISTRY/$IMAGE_NAME
-              docker push registry.digitalocean.com/$DIGITAL_OCEAN_REGISTRY/$IMAGE_NAME
