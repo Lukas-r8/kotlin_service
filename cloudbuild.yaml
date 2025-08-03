@@ -38,6 +38,9 @@ steps:
 images:
   - 'europe-west1-docker.pkg.dev/$PROJECT_ID/cloud-run-images/kotlin-service:$COMMIT_SHA'
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 # Substitutions (optional but useful):
 # Cloud Build provides default substitutions like $PROJECT_ID and $COMMIT_SHA.
 # If you use a custom image name or region, you can define them here or directly in the args.
