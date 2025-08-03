@@ -6,7 +6,7 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'europe-west1-docker.pkg.dev/$PROJECT_ID/cloud-run-images/kotlin-service:$COMMIT_SHA' # Artifact Registry path
+      - 'europe-west1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/kotlin-service:$COMMIT_SHA' # Artifact Registry path
       - '.' # Build context: current directory (where Dockerfile usually resides)
 
   # Step 2: Push the built image to Artifact Registry
@@ -14,7 +14,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'europe-west1-docker.pkg.dev/$PROJECT_ID/cloud-run-images/kotlin-service:$COMMIT_SHA'
+      - 'europe-west1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/kotlin-service:$COMMIT_SHA'
 
   # Step 3: Deploy the image to Cloud Run
   # This step uses the Cloud SDK builder to call 'gcloud run deploy'.
@@ -26,7 +26,7 @@ steps:
       - 'deploy'
       - 'kotlin-service' # Your Cloud Run service name
       - '--image'
-      - 'europe-west1-docker.pkg.dev/$PROJECT_ID/cloud-run-images/kotlin-service:$COMMIT_SHA'
+      - 'europe-west1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/kotlin-service:$COMMIT_SHA'
       - '--region'
       - 'europe-west1' # The region where your Cloud Run service is located
       - '--platform'
@@ -36,7 +36,7 @@ steps:
 
 # This section lists the images that will be built and pushed by this Cloud Build configuration.
 images:
-  - 'europe-west1-docker.pkg.dev/$PROJECT_ID/cloud-run-images/kotlin-service:$COMMIT_SHA'
+  - 'europe-west1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/kotlin-service:$COMMIT_SHA'
 
 options:
   logging: CLOUD_LOGGING_ONLY
