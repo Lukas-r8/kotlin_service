@@ -1,0 +1,45 @@
+steps:
+  # Step 1: Build the Docker image
+  # This step uses the Cloud Build 'docker' builder to build your image.
+  # It tags the image with a unique identifier ($COMMIT_SHA) for versioning.
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'europe-west1-docker.pkg.dev/$PROJECT_ID/cloud-run-images/kotlin-service:$COMMIT_SHA' # Artifact Registry path
+      - '.' # Build context: current directory (where Dockerfile usually resides)
+
+  # Step 2: Push the built image to Artifact Registry
+  # This step pushes the newly built and tagged image to your Artifact Registry repository.
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'europe-west1-docker.pkg.dev/$PROJECT_ID/cloud-run-images/kotlin-service:$COMMIT_SHA'
+
+  # Step 3: Deploy the image to Cloud Run
+  # This step uses the Cloud SDK builder to call 'gcloud run deploy'.
+  # It tells Cloud Run to create a new revision of your service using the image from Artifact Registry.
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'kotlin-service' # Your Cloud Run service name
+      - '--image'
+      - 'europe-west1-docker.pkg.dev/$PROJECT_ID/cloud-run-images/kotlin-service:$COMMIT_SHA'
+      - '--region'
+      - 'europe-west1' # The region where your Cloud Run service is located
+      - '--platform'
+      - 'managed' # Standard Cloud Run platform
+      # Uncomment the line below if your service should be publicly accessible
+      # - '--allow-unauthenticated'
+
+# This section lists the images that will be built and pushed by this Cloud Build configuration.
+images:
+  - 'europe-west1-docker.pkg.dev/$PROJECT_ID/cloud-run-images/kotlin-service:$COMMIT_SHA'
+
+# Substitutions (optional but useful):
+# Cloud Build provides default substitutions like $PROJECT_ID and $COMMIT_SHA.
+# If you use a custom image name or region, you can define them here or directly in the args.
+# _REGION: 'europe-west1'
+# _SERVICE_NAME: 'kotlin-service'
